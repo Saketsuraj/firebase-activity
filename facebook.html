@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Facebook sign in firebase</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+</head>
+
+<body>
+
+    <button onclick="facebookSignin()">Facebook Signin</button>
+    <br><br>
+    <a href="insertdata.html">Insert data to database</a>
+
+    <!--Include firebase.js  -->
+    <script src="https://www.gstatic.com/firebasejs/4.3.1/firebase.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.0.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.11.1/firebase-auth.js"></script>
+
+    <!--Configure firebase-->
+    <script>
+        // Visit https://console.firebase.google.com/project/<your project id>/overview and click on "Add Firebase to your web app"
+        var config = {
+            apiKey: "AIzaSyDaJF3B1AlE_599LNf_gwxPJ_RiwA2SVzA",
+            authDomain: "authen-f0c61.firebaseapp.com",
+            databaseURL: "https://authen-f0c61.firebaseio.com",
+            projectId: "authen-f0c61",
+            storageBucket: "authen-f0c61.appspot.com",
+            messagingSenderId: "125105046637",
+            appId: "1:125105046637:web:e4ad1196c519d92a6d6b64",
+            measurementId: "G-FB4SNDEWVK"
+        };
+        firebase.initializeApp(config);
+
+
+        function facebookSignin() {
+            var provider = new firebase.auth.FacebookAuthProvider();
+            provider.addScope('user_birthday');
+            firebase.auth().useDeviceLanguage();
+            firebase.auth().signInWithPopup(provider).then(function (result) {
+                var token = result.credential.accessToken;
+                var user = result.user;
+                console.log(user);
+            }).catch(function (error) {
+                var errorCode = error.code;
+                var errorMessage = error.message;
+                var email = error.email;
+                var credential = error.credential;
+            });
+        }
+
+
+    </script>
+
+</body>
+
+</html>
